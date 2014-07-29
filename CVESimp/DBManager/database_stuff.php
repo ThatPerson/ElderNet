@@ -42,5 +42,15 @@
 			$que = "insert into into t_connections (uid_, tid, orig) values ('".$this->mysqli->real_escape_string($uid)."', '".$p."', '0')";
 			$this->mysqli->query($que);
 		}
+		function install_application($uid, $aid) {
+			$query = "select version from apps where id = '".$this->mysqli->real_escape_string($aid)."'";
+			$p = $this->mysqli->query($query);
+			
+			$p->data_seek(0);
+			$ro = $p[0];
+
+			$query = "insert into app_vers (uid_, ver, aid) values ('".$this->mysqli->real_escape_string($uid)."', '".$this->mysqli->real_escape_string($ro)."', '".$this->mysqli->real_escape_string($aid)."')";
+			$this->mysqli->query($query);
+		}
 	}
 ?>
