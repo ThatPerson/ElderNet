@@ -43,14 +43,16 @@
 			$this->mysqli->query($que);
 		}
 		function install_application($uid, $aid) {
-			$query = "select version from apps where id = '".$this->mysqli->real_escape_string($aid)."'";
+			$query = "select version, pub from apps where id = '".$this->mysqli->real_escape_string($aid)."'";
 			$p = $this->mysqli->query($query);
 			
 			$p->data_seek(0);
-			$ro = $p[0];
+			$row = $p->fetch_assoc();
+			$ro = $row["version"];
 
 			$query = "insert into app_vers (uid_, ver, aid) values ('".$this->mysqli->real_escape_string($uid)."', '".$this->mysqli->real_escape_string($ro)."', '".$this->mysqli->real_escape_string($aid)."')";
 			$this->mysqli->query($query);
+			return $row["pub"];
 		}
 		function update_application($uid, $aid) {
 			$query = "update app_vers, apps, users set app_vers.ver = apps.version where apps.id = '".."' and app_vers.aid = apps.id and app_vers.uid_ = users.uid_ and users.uid_ = '".."'";
@@ -60,5 +62,46 @@
 			$query = "delete from app_vers where uid_ = '".$this->mysqli->real_escape_string($uid)."' and aid = '".$this->mysqli->real_escape_string($aid)."'";
 			$this->mysqli->query($query);
 		}
+		function check_installed($aid, $uid) {
+			$query = "select app_vers.ver as inst, apps.version as curr from apps, app_vers where apps.id = app_vers.aid and app_vers.aid = '".$aid."' and app_vers.uid_ = '".$uid."'";
+			$q = $this->mysqli->query($query);
+			if ($q->num_rows == 0)
+				return -1;
+			$q->data_seek(0);
+			$l = $q->fetch_assoc();
+			if ($l["inst"] == $l["curr"]) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		function get_app_id($name) {
+			$quer = "select id from apps where name = '".$this->mysqli->real_escape_string($name)."'";
+			$p = $this->mysqli->query($quer);
+			$p->data_seek(0);
+			$ro = $p->fetch_assoc();
+			return $ro["id"];
+		}
+		function get_app_info($aid) {
+			$quer = "select name, url, desc from apps where id = '".$aid."'";
+			$l = $this->mysqli->query($quer);
+			$ro = [];
+			if ($l->num_rows == 0) {
+				return 0;
+			}
+			$l->data_seek(0);
+			return $l->fetch_assoc();
+		}
+		function get_app_list($uid) {
+			$quer = "select apps.name, apps.url, apps.desc from apps, app_vers where apps.id = app_vers.aid and app_vers.uid_ = '".$uid."'";
+			$l = $this->mysqli_->query($quer);
+			$ro = []
+			for ($i = 0; $i < $l->num_rows; $i++) {
+				$l->data_seek($i);
+				$o = $l->fetch_assoc();
+				$ro[] = $o;
+			}
+			return $ro;
+		}	
 	}
 ?>
