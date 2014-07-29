@@ -52,5 +52,13 @@
 			$query = "insert into app_vers (uid_, ver, aid) values ('".$this->mysqli->real_escape_string($uid)."', '".$this->mysqli->real_escape_string($ro)."', '".$this->mysqli->real_escape_string($aid)."')";
 			$this->mysqli->query($query);
 		}
+		function update_application($uid, $aid) {
+			$query = "update app_vers, apps, users set app_vers.ver = apps.version where apps.id = '".."' and app_vers.aid = apps.id and app_vers.uid_ = users.uid_ and users.uid_ = '".."'";
+			$this->mysqli->query($query);
+		}
+		function uninstall_application($uid, $aid) {
+			$query = "delete from app_vers where uid_ = '".$this->mysqli->real_escape_string($uid)."' and aid = '".$this->mysqli->real_escape_string($aid)."'";
+			$this->mysqli->query($query);
+		}
 	}
 ?>
