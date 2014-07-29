@@ -1,4 +1,4 @@
 ElderNet
 ========
 
-An open, safer and more easier internet for the SilverSurfer.
+An internet for the SilverSurfer free from danger.
