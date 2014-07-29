@@ -70,3 +70,18 @@ class t_database:
 				l.append(row)
 		return l
 		# And we have the articles in l!
+	def add_application(version, name, url, pub, desc):
+		query = "insert into apps (version, name, url, pub, desc) values ('%s', '%s', '%s', '%s', '%s')"
+		dat = (version, name, url, pub, desc,)
+		self.cur.execute(query, dat)
+	def update_app_url(aid, url):
+		query = "update apps set url = '%s' where id = '%s'"
+		dat = (url, aid,)
+		self.cur.execute(query, dat)
+
+	def update_app_ver(aid, ver):
+		query = "update apps set version = '%s' where id = '%s'"
+		dat = (ver, aid, )
+		self.cur.execute(query, dat)
+
+
