@@ -3,6 +3,7 @@
 	$username = "blah";
 	$password = "bleh";
 	$dbname = "bloh";
+	/* placeholder names */
 	$mysqli = new mysqli($hostname, $username, $password, $dbname);
 	$qu = "select * from light_writers where md5(username) = '".$mysqli->real_escape_string($_COOKIE['us'])."' and password = '".$mysqli->real_escape_string($_COOKIE['ps'])."'";
 		$r = $mysqli->query($qu);
