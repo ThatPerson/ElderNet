@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Sign Up</title>
+		<title>Sign Up | <%=@title%></title>
 		<style>
 			div{
 				color: darkgray;
@@ -37,30 +37,40 @@
 			}
 		</style>
 		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/validetta.min.css" rel="stylesheet">
 		<link href="../css/style.css" rel="stylesheet">
 	</head>
-	
 	<body>
 		<span class="half silver"><a href="../index.html">Return to Eldernet</a></span>
 		<div class="prime">
 			Sign up
 		</div>
-		<form role="form" class="table" action="/login/signup" method="post">
+		<%if flash[:message]%>
+		<div class="alert alert-warning" role="alert"><%=flash[:message]%></div>
+		<%end%>
+		<form role="form" id="form" class="table" action="/login/signup" method="post">
 			<div class="form-group">
-				<input type="text" id="username" placeholder="Eldername" required>
+				<input type="text" name="username" placeholder="Eldername" data-validetta="required,minLength[3],maxLength[32]">
 			</div>
 			<div class="form-group">
-				<input type="password" id="password" placeholder="Elderpass" required>
+				<input type="password" name="password" placeholder="Elderpass" data-validetta="required,minLength[8],maxLength[64]">
 			</div>
 			<div class="form-group">
-				<input type="password" id="re-password" placeholder="Re-enter Elderpass" required>
+				<input type="password" name="re_password" placeholder="Re-enter Elderpass" data-validetta="required,minLength[8],maxLength[64]">
 			</div>
 			<div class="form-group">
-				<input type="tel" id="phone" placeholder="Phone number" required>
+				<input type="tel" name="phone" placeholder="Phone number" data-validetta="required,minLength[11],maxLength[13],number">
 			</div>
 			<div class="form-group">
 				<button class="submit link"id="submit">Sign up</button>
 			</div>
 		</form>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/validetta.min.js"></script>
+		<script type="text/javascript">
+		$( document ).ready(function() {
+		$('#form').validetta({ realTime : true});
+		});
+		</script>
 	</body>
 </html>

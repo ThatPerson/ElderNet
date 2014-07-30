@@ -5,6 +5,8 @@ gem "sinatra", "~> 1.4"
 gem "shotgun"
 gem "puma"
 gem "oj"
+gem "bcrypt"
+gem 'rack-flash3'
 
 # Database Stack
 gem "sequel"
