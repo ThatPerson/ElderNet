@@ -1,8 +1,15 @@
+<?php
+	include(../../CVESimp/DBManager/database_stuff.php);
+	
+	$database = new t_database("hostname", "username", "password", "dbname");
+	
+	$relevant_articles = get_relevant_articles("userId");
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>News</title>
+		<title>News | <%=@title%></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
@@ -51,15 +58,15 @@
 			<div class="row clearfix">
 				<div class="col-md-6 column">
 					<div class="row clearfix">
-						<div class="col-md-6 column slogan">
-							<?php
-								echo $relevant_articles[0]["name"]
-							?>
+						<div class="col-md-6 column">
+							<% @articles.each do |article|%>
+								<p><%=article[:date_p]%></p>
+							<%end%>
 						</div>
-						<div class="col-md-6 column link">
-							<?php
-								echo $relevant_articles[0]["simplified"]
-							?>
+						<div class="col-md-6 column">
+							<% @articles.each do |article|%>
+								<p><%=article[:simplified]%></p>
+							<%end%>
 						</div>
 				</div>
 				<div class="col-md-6 column">
