@@ -14,13 +14,13 @@ class t_database:
 		self.cur = db.cursor()
 	
 	def add_tag(self, tag):
-		query = "select id from tags where tag = %s";
+		query = "select id from tag where tag = %s";
 		self.cur.execute(query, tag)
 		q = -1
 		for row in self.cur.fetchall():
 			q = row
 		if q == -1:
-			que = "insert into tags (tag) values (%s)"
+			que = "insert into tag (tag) values (%s)"
 			self.cur.execute(que, tag)
 			q = self.cur.insert_id()
 			
