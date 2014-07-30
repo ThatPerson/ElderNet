@@ -32,18 +32,22 @@ class t_database:
 		self.cur = db.cursor()
 	
 	def add_tag(self, tag):
-		query = "select id from tags where tag = %s";
+		query = "select id from tag where tag = %s";
 		self.cur.execute(query, tag)
 >>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
 		q = -1
 		for row in self.cur.fetchall():
 			q = row
 		if q == -1:
+<<<<<<< HEAD
 			que = "insert into tags (tag) values (%s)"
 <<<<<<< HEAD
 			self.cur.execute(que, (tag,))
 			q = self.cur.lastrowid
 =======
+=======
+			que = "insert into tag (tag) values (%s)"
+>>>>>>> 21b2bce20c1131c7d512f427084b876d7f04d978
 			self.cur.execute(que, tag)
 			q = self.cur.insert_id()
 >>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6

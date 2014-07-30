@@ -1,3 +1,10 @@
+<?php
+	include(../../CVESimp/DBManager/database_stuff.php);
+	
+	$database = new t_database("hostname", "username", "password", "dbname");
+	
+	$relevant_articles = get_relevant_articles("userId");
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -33,11 +40,6 @@
 			<div class="row clearfix mt">
 				<div class="col-md-4 column">
 					<div class="row clearfix">
-						<div class="col-md-6 column">
-							<div class="circular-pic"><p class="username">Gene</p></div>
-						</div>
-						<div class="col-md-6 column">
-						</div>
 					</div>
 				</div>
 			</div>
@@ -57,28 +59,15 @@
 				<div class="col-md-6 column">
 					<div class="row clearfix">
 						<div class="col-md-6 column slogan">
-							a place for
+							<?php
+								echo $relevant_articles[0]["name"]
+							?>
 						</div>
 						<div class="col-md-6 column link">
-							<a href="">news</a>
+							<?php
+								echo $relevant_articles[0]["simplified"]
+							?>
 						</div>
-					</div>
-					<div class="row clearfix">
-						<div class="col-md-6 column slogan">
-							the older
-						</div>
-						<div class="col-md-6 column link">
-							<a href="">images</a>
-						</div>
-					</div>
-					<div class="row clearfix">
-						<div class="col-md-6 column slogan">
-							generation
-						</div>
-						<div class="col-md-6 column link">
-							<a href="">videos</a>
-						</div>
-					</div>
 				</div>
 				<div class="col-md-6 column">
 				</div>
