@@ -1,5 +1,4 @@
 import MySQLdb
-<<<<<<< HEAD
 import re
 import string
 def remove_tag(s):
@@ -8,70 +7,30 @@ def remove_tag(s):
 class t_database:	
 	db=0
 	cur=0
-=======
 
-class t_database:	
-	db = MySQLdb.connect(host="", # your host, usually localhost
-                     user="", # your username
-                      passwd="", # your password
-                      db="") # name of the data base
-	cur = db.cursor() 
->>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
 	def __init__(self, hostname, username, password, database):
 		self.db = MySQLdb.connect(host=hostname, # your host, usually localhost
                      	user=username, # your username
                      	passwd=password, # your password
                      	db=database) # name of the data base
-<<<<<<< HEAD
 		self.cur = self.db.cursor()
 	
-	def add_tag(self, tag):
-		query = "select id from tags where tag = %s";
-		self.cur.execute(query, (tag,))
-=======
-		self.cur = db.cursor()
 	
 	def add_tag(self, tag):
 		query = "select id from tag where tag = %s";
 		self.cur.execute(query, tag)
->>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
 		q = -1
 		for row in self.cur.fetchall():
 			q = row
 		if q == -1:
-<<<<<<< HEAD
-			que = "insert into tags (tag) values (%s)"
-<<<<<<< HEAD
-			self.cur.execute(que, (tag,))
-			q = self.cur.lastrowid
-=======
-=======
 			que = "insert into tag (tag) values (%s)"
->>>>>>> 21b2bce20c1131c7d512f427084b876d7f04d978
 			self.cur.execute(que, tag)
 			q = self.cur.insert_id()
->>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
 			
 		return q # should return tag id and add it.
 				 # if the tag does exist, just retu
 				 # rn tag id!
 	
-<<<<<<< HEAD
-
-
-	def add_article(self, name, url, desc, date, tags):
-		query = "insert ignore into articles (name, url, simplified, date_p) values (%s, %s, %s, %s)"
-		curs = (remove_tag(name), remove_tag(url), remove_tag(desc), date, )
-		print (query, curs)
-		self.cur.execute(query, curs)
-		itemid = self.cur.lastrowid
-		#for p in tags:
-		#	l = self.add_tag(p)
-		#	query = "insert into t_connections (uid_, tid, orig) values (%s, %s, 1)"
-		#	curs = (itemid, l, )
-		#	self.cur.execute(query, curs)
-		
-=======
 	def add_article(self, name, url, desc, date, tags):
 		query = "insert into articles (name, url, simplified, date_p) values (%s, %s, %s, %s)"
 		curs = (name, url, desc, date, )
@@ -82,7 +41,6 @@ class t_database:
 			query = "insert into t_connections (uid_, tid, orig) values (%s, %s, 1)"
 			curs = (itemid, l, )
 			self.cur.execute(query, curs)
->>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
 		return 1
 
 	def add_user(self, username, password):
@@ -128,13 +86,10 @@ class t_database:
 		query = "update apps set version = '%s' where id = '%s'"
 		dat = (ver, aid, )
 		self.cur.execute(query, dat)
-<<<<<<< HEAD
 	def commit_data():
 		self.db.commit()
 
 
            
-=======
 
 
->>>>>>> 45089bb17c525039b232cd2cb97d9e34b26720a6
