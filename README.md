@@ -5,6 +5,7 @@ An internet for the SilverSurfer free from danger. It has reliable downloads - c
 
 What's it made with?
 ====================
+The main languages used : 
 HTML
 CSS
 PHP
