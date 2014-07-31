@@ -31,10 +31,8 @@ Video -- Gurtej Machen / (no github name)
 How to use!
 ===========
 
-To run - you can't...
+You can visit Eldernet here : https://elder.herokuapp.com/
 
-This project was made for #YRS2014.
+You are free to host parts or the entire of Eldernet on your website, as long as you credit & tell us!
 
-If you want to host the code on your website - you can!
-
-Just tell us though GitHub, we don't need to know - we just like to see our 'fans'...
+If you find any bugs while using the site - report them on Github...
