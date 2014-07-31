@@ -98,4 +98,29 @@ class DynamicFrontEnd < Sinatra::Base
     @articles = DB[:articles].all
     erb :news
   end
+
+  post "/apps" do
+    content_type :json
+    params[:username] = params[:username] || ''
+    params[:password] = params[:password] || ''
+    params[:apps] = params[:apps] || ''
+    params[:platform] = params[:platform] || ''
+    if !params[:username].empty? & !params[:password].empty? & !params[:apps].empty? & !params[:platform].empty?
+      users = DB[:users]
+      user = users.where(username: params[:username])
+      if !user.empty?
+        if user.first[:password] == BCrypt::Engine.hash_secret(params[:password], user.first[:salt])
+          apps = DB[:apps]
+          # Oj.dump({success: true, platform: params[:platform], apps: params[:apps]})
+          Oj.dump({success: true, apps: Oj.load(URI.unescape(params[:apps])), platform: params[:platform]})
+        else
+          Oj.dump({success: false, message: "Wrong password!"})
+        end
+      else
+        Oj.dump({success: false, message: "No user with that name!"})
+      end
+    else
+      Oj.dump({success: false, message: "Not Enough Data"})
+    end
+  end
 end
