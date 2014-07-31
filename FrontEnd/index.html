@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
+    <script type="text/javascript">
+if ( window.addEventListener ) {  
+  var state = 0, konami = [38,38,40,40,37,39,37,39,66,65];  
+  window.addEventListener("keydown", function(e) {  
+    if ( e.keyCode == konami[state] ) state++;  
+    else state = 0;  
+    if ( state == 10 )  
+      window.location = "hackers.html";  //you can write your own code here
+    }, true);  
+}  
+    </script>
+
 	<head>
 		<meta charset="utf-8">
-		<title>Eldernet</title>
+		<title>Project Silver</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
@@ -43,7 +56,7 @@
 			</div>
 			<div class="row clearfix prime">
 				<div class="col-md-6 column ">
-					<span class="silver">Elder</span><span class="black">net</span>
+					<span class="silver">Project</span><span class="black">Silver</span>
 				</div>
 				<div class="col-md-6 column">
 					<form role="form">
@@ -73,7 +86,7 @@
 					</div>
 					<div class="row clearfix">
 						<div class="col-md-6 column slogan">
-							generation
+							generation.
 						</div>
 						<div class="col-md-6 column link">
 							<a href="appManager/appManager.html">Applications</a>
