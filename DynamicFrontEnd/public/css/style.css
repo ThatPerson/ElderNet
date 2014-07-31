@@ -59,6 +59,22 @@
 
 input {
 	border: 3px solid #000;
-	margin-top: 1.5em;
 	height: 4em;
+	margin-left: auto ;
+	margin-right: auto ;
+}
+
+.select {
+	border: 3px solid #000;
+	width: 50%;
+	margin-left: auto ;
+	margin-right: auto ;
+}
+
+.control-label {
+	color: #000;
+}
+
+.desc {
+	min-height: 15em;
 }
