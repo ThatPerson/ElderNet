@@ -8,25 +8,32 @@
 			}
 			.submit{
 				text-align:center;
-				background-color:dodgerblue;
-				border:0px solid black;
-				border-radius:10px;
+				background-color:white;
+				border:1px solid lightgray;
 				width:20%;
 				height:10%;
-				font-family:Comic Sans MS;
+				font-family:DEFAULT;
 				font-size:130%;
 				color:black
 			}
 			.submit:hover{
 				text-align:center;
-				background-color:deepskyblue;
-				border:0px solid black;
-				border-radius:10px;
+				background-color:lightgray;
+				border:1px solid lightgray;
 				width:20%;
 				height:10%;
-				font-family:Comic Sans MS;
+				font-family:DEFAULT;
 				font-size:130%;
 				color:black;
+			}
+			input{
+				height:10%;
+				width: 50%;
+				text-align:center;
+				margin:9%;
+			}
+			.half{
+				font-size: 2em
 			}
 		</style>
 		<link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -34,31 +41,21 @@
 	</head>
 	
 	<body>
+		<span class="half silver"><a href="../index.html">Return to Eldernet</a></span>
 		<div class="prime">
 			Eldernet
 		</div>
 		<div class="prime">
-			Sign In
+			Sign up
 		</div>
 		<div class="table">
-			<div class="row clearfix secondary">
-				<div class="col-md-6 column">
-					Name
-				</div>
-				<div class="col-md-3 column link download">
-					<input type="text" class="form-control" id="username" placeholder="Name...">
-				</div>
-				<div class="col-md-6 column">
-					Password
-				</div>
-				<div class="col-md-3 column">
-					<input type="password" class="form-control" id="password">
-				</div>
-					<button class="submit link"id="submit">Submit</button>
-				<div class="col-md-9 column">
-					<a href="signup.html" class="submit">Sign Up</a>
-				</div>
-			</div>
+					<input type="text" id="username" placeholder="Eldername">
+					<br />
+					<br />
+					<input type="password" id="password" placeholder="Elderpass">
+					<br />
+					<br />
+					<button class="submit link"id="submit">Sign up</button>
 		</div>
 	</body>
 </html>
