@@ -7,6 +7,7 @@ gem "puma"
 gem "oj"
 gem "bcrypt"
 gem 'rack-flash3'
+gem "dropbox-sdk"
 
 # Database Stack
 gem "sequel"

@@ -61,6 +61,13 @@
 			<div class="form-group">
 				<input type="tel" name="phone" placeholder="Phone number" data-validetta="required,minLength[11],maxLength[13],number">
 			</div>
+			<div class="control-group">
+				<label class="control-label" for="icon">Select a Picture:</label>
+				<div class="controls">
+					<input id="icon" class="input-file" type="file">
+				</div>
+			</div>
+			<input type="hidden" name="picture" value="" id="hiddenicon">
 			<div class="form-group">
 				<button class="submit link"id="submit">Sign up</button>
 			</div>
@@ -70,6 +77,18 @@
 		<script type="text/javascript">
 		$( document ).ready(function() {
 		$('#form').validetta({ realTime : true});
+		function readImage(input) {
+			if ( input.files && input.files[0] ) {
+					var FR= new FileReader();
+					FR.onload = function(e) {
+						$('#hiddenicon').val( e.target.result );
+					};
+					FR.readAsDataURL( input.files[0] );
+				}
+			}
+			$("#icon").change(function(){
+				readImage( this );
+			});
 		});
 		</script>
 	</body>

@@ -1,5 +1,5 @@
 require 'rack-flash'
-
+require 'dropbox_sdk'
 
 class DynamicFrontEnd < Sinatra::Base
 
@@ -8,6 +8,10 @@ class DynamicFrontEnd < Sinatra::Base
   use Rack::Flash
   set :session_secret, "e9a37a7612ad2b501c648ccba28b4a539e31c9a732452b677b2b7d39d9daa39da18b06da24b9efdfd5ea312789ded1fd776bc722f842f66a02d3357c246c56de"
 
+  ##########################################
+  # Methods                                #
+  ##########################################
+
   def auth!
     unless session[:username]
       flash[:message] = "You are not logged in"
@@ -15,9 +19,42 @@ class DynamicFrontEnd < Sinatra::Base
     end
   end
 
+  def get_dropbox_auth
+    redirect_uri = "#{request.base_url}/api/auth/dropbox/callback"
+    flow = DropboxOAuth2Flow.new( 'glykt2ktunllls8', 'khfxhnkamr8jc96', redirect_uri, session, :dropbox_auth_csrf_token)
+  end
+
+  def get_dropbox_client
+    return DropboxClient.new(session[:dropbox_access_token]) if session[:dropbox_access_token]
+  end
+
+  ##########################################
+  # General Routes                         #
+  ##########################################
+
+  get '/api/getfiles/dropbox' do
+    session['dropbox_access_token'] ||= ''
+    if session['dropbox_access_token'] != ''
+        content_type :json
+        search = get_dropbox_client.metadata('/')["contents"]
+        Oj.dump(search)
+    else
+      Oj.dump({status: "failed"})
+    end
+  end
+
   get "/" do
+    if session[:username]
+      users = DB[:users]
+      @user = users.where(username: session[:username]).first
+    end
     @title = "Elder Net"
     erb :index
+  end
+
+  get "/wordsearch" do
+    @title = "Elder Net"
+    erb :wordsearch
   end
 
   get "/login/signin" do
@@ -63,11 +100,6 @@ class DynamicFrontEnd < Sinatra::Base
     erb :signup
   end
 
-  get "/logout" do
-    session['username'] = nil
-    redirect "/"
-  end
-
   post "/login/signup" do
     @title = "Elder Net"
     if params[:password] == params[:re_password]
@@ -79,7 +111,7 @@ class DynamicFrontEnd < Sinatra::Base
         users = DB[:users]
         password_salt = BCrypt::Engine.generate_salt
         password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
-        users.insert(username: params[:username], password: password_hash, phone: params[:phone], salt: password_salt)
+        users.insert(username: params[:username], password: password_hash, phone: params[:phone], salt: password_salt, picture: params[:picture])
         session['username'] = params[:username]
         redirect '/'
       end
@@ -89,20 +121,15 @@ class DynamicFrontEnd < Sinatra::Base
     end
   end
 
-  # post "/login/signup" do
-  #   users = DB[:users]
-  #   check = DB[%Q(SELECT * FROM users WHERE username = '#{params[:username]}' or phone = '#{params[:phone]}')].all
-  #   # if check.empty? do
-  #   #     users.insert(username: params[:username], )
-  #   #     else
-  #   #     end
-  #   # %Q(SELECT * FROM users WHERE username = '#{params[:username]}' or phone = '#{params[:phone]}')
-  #   # %Q(#{params})
-  # end
+  get "/logout" do
+    session['username'] = nil
+    redirect "/"
+  end
 
   get "/news" do
+    auth!
     @title = "Elder Net"
-    @articles = DB[:articles].all
+    @articles = DB[:articles].limit(30)
     erb :news
   end
 
@@ -163,5 +190,25 @@ class DynamicFrontEnd < Sinatra::Base
     else
       Oj.dump({success: false, message: "Not Enough Data"})
     end
+  end
+
+  ##########################################
+  # Oauth Routes                           #
+  ##########################################
+  get '/api/auth/dropbox' do
+    auth_url = get_dropbox_auth.start
+    redirect to auth_url
+  end
+
+  get '/api/auth/dropbox/logout' do
+    session.delete(:dropbox_access_token)
+    redirect to '/'
+  end
+
+  get '/api/auth/dropbox/callback' do
+    code = params[:code]
+    dropbox_access_token, user_id, url_state = get_dropbox_auth.finish(params)
+    session['dropbox_access_token'] = dropbox_access_token
+    redirect to '/'
   end
 end

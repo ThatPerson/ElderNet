@@ -78,3 +78,33 @@ input {
 .desc {
 	min-height: 15em;
 }
+
+.wordsearch {
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 2;
+	background-color: #eee;
+}
+
+.white-panel {
+	text-align: center;
+	background: #ffffff;
+	color: #797979;
+}
+
+.white-panel .white-header {
+	background: #f4f4f4;
+	padding: 3px;
+	margin-bottom: 15px;
+	color: #989898;
+}
+
+.pn {
+	overflow: scroll;
+	height: 20em;
+	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.center {
+	text-align: center;
+}
