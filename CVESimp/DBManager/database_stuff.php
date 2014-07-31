@@ -13,6 +13,8 @@
 			$p = $this->mysqli->query($query);
 			return $mysqli->num_rows;
 		}
+
+		// TODO
 		function get_relevant_articles($uid) {
 			$query = "select tags.tag from tags, t_connections, users where users.uid_ = t_connection.uid_ and tags.id = t_connections.tid and t_connections.orig = 0 and users.uid_ = ".$this->mysqli->real_escape_string($uid);
 			$l = [];
